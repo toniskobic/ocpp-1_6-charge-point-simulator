@@ -546,6 +546,9 @@
       $("#mvp").click(function () {
         const i = Number($("#meterInterval").val());
         timesRun = 0;
+        if(interval) {
+          clearInterval(interval);
+        }
         interval = setInterval(function () {
           timesRun += 1;
           const val = Number($("#metervalue").val());
