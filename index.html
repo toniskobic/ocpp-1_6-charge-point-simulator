@@ -235,6 +235,9 @@
     let connector_locked = false;
     let wsCloseClientInitiated = false;
 
+    function isWsOpened() {
+      return _websocket?.readyState && _websocket?.readyState === WebSocket.OPEN;
+    }
 
     function randomId() {
       let id = "";
@@ -530,23 +533,28 @@
       });
 
       $("#send").click(function () {
+        if (!isWsOpened()) return;
         Authorize();
       });
 
       $("#start").click(function () {
+        if (!isWsOpened()) return;
         startTransaction();
       });
 
       $("#stop").click(function () {
+        if (!isWsOpened()) return;
         stopTransaction();
       });
       $("#mv").click(function () {
+        if (!isWsOpened()) return;
         send_meterValue();
       });
       $("#mvp").click(function () {
+        if (!isWsOpened()) return;
         const i = Number($("#meterInterval").val());
         timesRun = 0;
-        if(interval) {
+        if (interval) {
           clearInterval(interval);
         }
         interval = setInterval(function () {
@@ -575,10 +583,12 @@
       });
 
       $("#heartbeat").click(function () {
+        if (!isWsOpened()) return;
         send_heartbeat();
       });
 
       $("#status").click(function () {
+        if (!isWsOpened()) return;
         sessionStorage.setItem("LastAction", "StatusNotification");
         console.log("sss", $("#ConnectorStatus").val());
         const SN = JSON.stringify([
@@ -599,6 +609,7 @@
       });
 
       $("#data_transfer").click(function () {
+        if (!isWsOpened()) return;
         sessionStorage.setItem("LastAction", "DataTransfer");
         const DT = JSON.stringify([
           2,
